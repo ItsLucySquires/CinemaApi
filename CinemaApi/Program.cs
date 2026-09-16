@@ -1,8 +1,12 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Identity.Web;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("CinemaApiContext") ?? throw new InvalidOperationException("Connection string 'CinemaApiContext' not found.");
+
+builder.Services.AddDbContext<CinemaApiContext>(options => options.UseSqlServer(connectionString));
 
 // Add services to the container.
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
