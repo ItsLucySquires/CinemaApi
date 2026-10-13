@@ -64,11 +64,21 @@ public class CinemasController : ControllerBase
         return NoContent();
     }
 
-    // POST: api/Cinema
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+    /// <summary>
+    /// Creates a new cinema with the specified address and name.
+    /// </summary>
+    /// <param name="address">Full address of the cinema</param>
+    /// <param name="name">Cinema name</param>
+    /// <returns></returns>
     [HttpPost]
-    public async Task<ActionResult<Cinema>> PostCinema(Cinema cinema)
+    public async Task<ActionResult<Cinema>> PostCinema(string address, string name)
     {
+        Cinema cinema = new Cinema()
+        {
+            Id = Guid.NewGuid(),
+            Address = address, 
+            Name = name, 
+        };
         _context.Cinema.Add(cinema);
         await _context.SaveChangesAsync();
 
