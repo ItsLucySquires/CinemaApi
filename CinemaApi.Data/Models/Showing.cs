@@ -1,4 +1,4 @@
-﻿namespace CinemaApi.Models
+﻿namespace CinemaApi.Data.Models
 {
     public class Showing
     {

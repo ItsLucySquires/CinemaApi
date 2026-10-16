@@ -14,7 +14,7 @@ public class CinemasController : ControllerBase
 
     // GET: api/Cinema
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Cinema>>> GetCinema()
+    public async Task<ActionResult<IEnumerable<Cinema>>> GetCinemas()
     {
         return await _context.Cinema.ToListAsync();
     }
