@@ -1,4 +1,4 @@
-﻿using CinemaApi.Models;
+﻿using CinemaApi.Data.Models;
 using FakeItEasy;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;

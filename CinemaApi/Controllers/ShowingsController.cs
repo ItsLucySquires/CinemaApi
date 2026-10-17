@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using CinemaApi.Models;
+using CinemaApi.Data.Models;
 
 [Route("api/[controller]")]
 [ApiController]
