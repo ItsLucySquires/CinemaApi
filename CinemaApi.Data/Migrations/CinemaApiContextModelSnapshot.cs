@@ -16,12 +16,12 @@ namespace CinemaApi.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.12")
+                .HasAnnotation("ProductVersion", "10.0.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("CinemaApi.Models.Cinema", b =>
+            modelBuilder.Entity("CinemaApi.Data.Models.Cinema", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -40,7 +40,7 @@ namespace CinemaApi.Migrations
                     b.ToTable("Cinema");
                 });
 
-            modelBuilder.Entity("CinemaApi.Models.Film", b =>
+            modelBuilder.Entity("CinemaApi.Data.Models.Film", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -65,7 +65,31 @@ namespace CinemaApi.Migrations
                     b.ToTable("Film");
                 });
 
-            modelBuilder.Entity("CinemaApi.Models.Showing", b =>
+            modelBuilder.Entity("CinemaApi.Data.Models.Screen", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CinemaId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TypeDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CinemaId");
+
+                    b.ToTable("Screen");
+                });
+
+            modelBuilder.Entity("CinemaApi.Data.Models.Showing", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -85,7 +109,51 @@ namespace CinemaApi.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CinemaId");
+
+                    b.HasIndex("FilmId");
+
                     b.ToTable("Showing");
+                });
+
+            modelBuilder.Entity("CinemaApi.Data.Models.Screen", b =>
+                {
+                    b.HasOne("CinemaApi.Data.Models.Cinema", "Cinema")
+                        .WithMany("Screens")
+                        .HasForeignKey("CinemaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cinema");
+                });
+
+            modelBuilder.Entity("CinemaApi.Data.Models.Showing", b =>
+                {
+                    b.HasOne("CinemaApi.Data.Models.Cinema", "Cinema")
+                        .WithMany()
+                        .HasForeignKey("CinemaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CinemaApi.Data.Models.Film", "Film")
+                        .WithMany("Showings")
+                        .HasForeignKey("FilmId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cinema");
+
+                    b.Navigation("Film");
+                });
+
+            modelBuilder.Entity("CinemaApi.Data.Models.Cinema", b =>
+                {
+                    b.Navigation("Screens");
+                });
+
+            modelBuilder.Entity("CinemaApi.Data.Models.Film", b =>
+                {
+                    b.Navigation("Showings");
                 });
 #pragma warning restore 612, 618
         }

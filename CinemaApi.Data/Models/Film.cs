@@ -7,5 +7,6 @@
         public DateTime ReleaseDate { get; set; }
         public TimeSpan Duration { get; set; }
         public string AgeRating { get; set; }
+        public ICollection<Showing> Showings { get; set; }
     }
 }

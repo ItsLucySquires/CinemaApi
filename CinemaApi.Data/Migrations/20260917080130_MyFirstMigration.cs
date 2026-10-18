@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
-
+//Created using command "dotnet ef migrations add MyFirstMigration --project CinemaApi.Data --startup-project CinemaApi"
 namespace CinemaApi.Migrations
 {
     /// <inheritdoc />
