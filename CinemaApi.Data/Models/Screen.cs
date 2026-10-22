@@ -10,6 +10,7 @@ namespace CinemaApi.Data.Models
         public Cinema Cinema { get; set; }
         public string Name { get; set; }
         public string TypeDescription { get; set; }
+        public ICollection<Seat> Seats { get; set; }
 
     }
 }

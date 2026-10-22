@@ -18,6 +18,7 @@ builder.Services.AddCors(options =>
             policy.WithOrigins("http://localhost:5072/");
         });
 });
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
 var app = builder.Build();
 app.UseSwagger();
