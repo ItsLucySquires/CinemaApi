@@ -2,6 +2,7 @@ using CinemaApi.Data.Handlers;
 using CinemaApi.Data.Handlers.Cinema;
 using CinemaApi.Data.Models;
 using MediatR;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -44,8 +45,13 @@ public class CinemasController : ControllerBase
         return Ok(result);
     }
 
-    // PUT: api/Cinema/5
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+    
+    /// <summary>
+    /// Updates an existing cinema with the specified identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the cinema to update.</param>
+    /// <param name="cinema">The updated cinema data.</param>
+    /// <returns>An IActionResult indicating the result of the operation.</returns>
     [HttpPut("{id}")]
     public async Task<IActionResult> PutCinema(System.Guid? id, Cinema cinema)
     {
@@ -54,23 +60,7 @@ public class CinemasController : ControllerBase
             return BadRequest();
         }
 
-        _context.Entry(cinema).State = EntityState.Modified;
-
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!CinemaExists(id))
-            {
-                return NotFound();
-            }
-            else
-            {
-                throw;
-            }
-        }
+        await _mediator.Send(new UpdateCinemaCommand(id, cinema));
 
         return NoContent();
     }
@@ -84,36 +74,23 @@ public class CinemasController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Cinema>> PostCinema(string address, string name)
     {
-        Cinema cinema = new Cinema()
+        var cinema = new Cinema()
         {
             Id = Guid.NewGuid(),
-            Address = address, 
-            Name = name, 
+            Address = address,
+            Name = name,
         };
-        _context.Cinema.Add(cinema);
-        await _context.SaveChangesAsync();
+
+        await _mediator.Send(new PostCinemaCommand(cinema));
 
         return CreatedAtAction("GetCinema", new { id = cinema.Id }, cinema);
     }
 
     // DELETE: api/Cinema/5
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteCinema(System.Guid? id)
+    public async Task<IActionResult> DeleteCinema(System.Guid id)
     {
-        var cinema = await _context.Cinema.FindAsync(id);
-        if (cinema == null)
-        {
-            return NotFound();
-        }
-
-        _context.Cinema.Remove(cinema);
-        await _context.SaveChangesAsync();
-
-        return NoContent();
-    }
-
-    private bool CinemaExists(System.Guid? id)
-    {
-        return _context.Cinema.Any(e => e.Id == id);
+        await _mediator.Send(new DeleteCinemaCommand(id));
+        return Ok();
     }
 }
