@@ -7,4 +7,5 @@ public class CinemaApiContext(DbContextOptions<CinemaApiContext> options) : DbCo
     public DbSet<Film> Film { get; set; } = default!;
     public DbSet<Showing> Showing { get; set; } = default!;
     public DbSet<Screen> Screen { get; set; } = default!;
+    public DbSet<Seat> Seat { get; set; } = default!;
 }

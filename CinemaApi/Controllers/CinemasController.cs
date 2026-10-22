@@ -1,4 +1,7 @@
+using CinemaApi.Data.Handlers;
+using CinemaApi.Data.Handlers.Cinema;
 using CinemaApi.Data.Models;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,31 +9,39 @@ using Microsoft.EntityFrameworkCore;
 [ApiController]
 public class CinemasController : ControllerBase
 {
-    private readonly CinemaApiContext _context;
-    public CinemasController(CinemaApiContext context)
+    private readonly IMediator _mediator;
+    public CinemasController(IMediator mediator)
     {
-        _context = context;
+        _mediator = mediator;
     }
 
-    // GET: api/Cinema
+    /// <summary>
+    /// Returns a list of all Cinemas
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Cinema>>> GetCinemas()
     {
-        return await _context.Cinema.ToListAsync();
+        var result = await _mediator.Send(new CinemaQuery());
+        return Ok(result);
     }
 
-    // GET: api/Cinema/5
+    /// <summary>
+    /// Returns a list of cinemas that match specified search criteria
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet("{id}")]
     public async Task<ActionResult<Cinema>> GetCinema(System.Guid id)
     {
-        var cinema = await _context.Cinema.FindAsync(id);
+        var result = await _mediator.Send(new CinemaQuery());
 
-        if (cinema == null)
+        if (result == null)
         {
             return NotFound();
         }
 
-        return cinema;
+        return Ok(result);
     }
 
     // PUT: api/Cinema/5
