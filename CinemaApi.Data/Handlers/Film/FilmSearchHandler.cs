@@ -2,15 +2,15 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace CinemaApi.Data.Handlers.Cinema
+namespace CinemaApi.Data.Handlers.Film
 {
-    public sealed record CinemaSearchQuery(string SearchTerm) : IRequest<IReadOnlyList<Models.Cinema>>;
+    public sealed record FilmSearchQuery(string SearchTerm) : IRequest<IReadOnlyList<Models.Film>>;
 
-    public class CinemaSearchQueryHandler(CinemaApiContext dbContext) : IRequestHandler<CinemaSearchQuery, IReadOnlyList<Models.Cinema>>
+    public class FilmSearchQueryHandler(CinemaApiContext dbContext) : IRequestHandler<FilmSearchQuery, IReadOnlyList<Models.Film>>
     {
-        public async Task<IReadOnlyList<Models.Cinema>> Handle(CinemaSearchQuery request, CancellationToken cancellationToken)
+        public async Task<IReadOnlyList<Models.Film>> Handle(FilmSearchQuery request, CancellationToken cancellationToken)
         {
-            return await dbContext.Cinema.ToListAsync();
+            return await dbContext.Film.Where(f => f.Title.Contains(request.SearchTerm)).ToListAsync();
         }
     }
 }

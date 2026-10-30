@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace CinemaApi.Data.Handlers.Cinema
+namespace CinemaApi.Data.Handlers.Film
 {
     public record FilmQuery : IRequest<IReadOnlyList<Models.Film>>;
 

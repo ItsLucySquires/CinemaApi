@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
     
-namespace CinemaApi.Data.Handlers.Cinema
+namespace CinemaApi.Data.Handlers.Film
 {
     public sealed record UpdateFilmCommand(System.Guid? id, Models.Film film) : IRequest;
 

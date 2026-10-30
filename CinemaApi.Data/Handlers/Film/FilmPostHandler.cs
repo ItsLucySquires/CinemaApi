@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CinemaApi.Data.Handlers.Cinema
+namespace CinemaApi.Data.Handlers.Film
 {
     public sealed record PostFilmCommand(Models.Film film) : IRequest;
 
