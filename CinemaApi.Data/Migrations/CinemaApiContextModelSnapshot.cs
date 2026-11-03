@@ -38,6 +38,32 @@ namespace CinemaApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Cinema");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("11111111-1111-1111-1111-111111111111"),
+                            Address = "123 Pike Place, Seattle, WA",
+                            Name = "Seattle Cinema"
+                        },
+                        new
+                        {
+                            Id = new Guid("22222222-2222-2222-2222-222222222222"),
+                            Address = "456 Granville St, Vancouver, BC",
+                            Name = "Vancouver Theater"
+                        },
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-333333333333"),
+                            Address = "789 Avenida Paseo de la Reforma, Mexico City",
+                            Name = "Mexico City Multiplex"
+                        },
+                        new
+                        {
+                            Id = new Guid("44444444-4444-4444-4444-444444444444"),
+                            Address = "321 Calle 5 de Oriente, Puebla",
+                            Name = "Puebla Cinema Hall"
+                        });
                 });
 
             modelBuilder.Entity("CinemaApi.Data.Models.Film", b =>
@@ -63,6 +89,32 @@ namespace CinemaApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Film");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+                            AgeRating = "PG-13",
+                            Duration = new TimeSpan(0, 2, 20, 0, 0),
+                            ReleaseDate = new DateTime(2005, 5, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Title = "Star Wars Episode III Revenge of the Sith"
+                        },
+                        new
+                        {
+                            Id = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
+                            AgeRating = "PG-13",
+                            Duration = new TimeSpan(0, 2, 28, 0, 0),
+                            ReleaseDate = new DateTime(2010, 7, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Title = "Inception"
+                        },
+                        new
+                        {
+                            Id = new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"),
+                            AgeRating = "PG-13",
+                            Duration = new TimeSpan(0, 2, 49, 0, 0),
+                            ReleaseDate = new DateTime(2014, 11, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Title = "Interstellar"
+                        });
                 });
 
             modelBuilder.Entity("CinemaApi.Data.Models.Screen", b =>
@@ -87,6 +139,117 @@ namespace CinemaApi.Migrations
                     b.HasIndex("CinemaId");
 
                     b.ToTable("Screen");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("dddddddd-dddd-dddd-dddd-dddddddddddd"),
+                            CinemaId = new Guid("11111111-1111-1111-1111-111111111111"),
+                            Name = "Screen 1 - IMAX",
+                            TypeDescription = "IMAX Theater"
+                        },
+                        new
+                        {
+                            Id = new Guid("eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee"),
+                            CinemaId = new Guid("11111111-1111-1111-1111-111111111111"),
+                            Name = "Screen 2 - Standard",
+                            TypeDescription = "Standard Theater"
+                        },
+                        new
+                        {
+                            Id = new Guid("ffffffff-ffff-ffff-ffff-ffffffffffff"),
+                            CinemaId = new Guid("22222222-2222-2222-2222-222222222222"),
+                            Name = "Screen 1 - Premium",
+                            TypeDescription = "Premium Theater with Reclining Seats"
+                        });
+                });
+
+            modelBuilder.Entity("CinemaApi.Data.Models.Seat", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Number")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Row")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ScreenId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ScreenId");
+
+                    b.ToTable("Seat");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("50000000-0000-0000-0000-000000000001"),
+                            Number = 1,
+                            Row = "A",
+                            ScreenId = new Guid("dddddddd-dddd-dddd-dddd-dddddddddddd")
+                        },
+                        new
+                        {
+                            Id = new Guid("50000000-0000-0000-0000-000000000002"),
+                            Number = 2,
+                            Row = "A",
+                            ScreenId = new Guid("dddddddd-dddd-dddd-dddd-dddddddddddd")
+                        },
+                        new
+                        {
+                            Id = new Guid("50000000-0000-0000-0000-000000000003"),
+                            Number = 3,
+                            Row = "A",
+                            ScreenId = new Guid("dddddddd-dddd-dddd-dddd-dddddddddddd")
+                        },
+                        new
+                        {
+                            Id = new Guid("50000000-0000-0000-0000-000000000004"),
+                            Number = 1,
+                            Row = "B",
+                            ScreenId = new Guid("dddddddd-dddd-dddd-dddd-dddddddddddd")
+                        },
+                        new
+                        {
+                            Id = new Guid("50000000-0000-0000-0000-000000000005"),
+                            Number = 2,
+                            Row = "B",
+                            ScreenId = new Guid("dddddddd-dddd-dddd-dddd-dddddddddddd")
+                        },
+                        new
+                        {
+                            Id = new Guid("50000000-0000-0000-0000-000000000006"),
+                            Number = 1,
+                            Row = "A",
+                            ScreenId = new Guid("eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee")
+                        },
+                        new
+                        {
+                            Id = new Guid("50000000-0000-0000-0000-000000000007"),
+                            Number = 2,
+                            Row = "A",
+                            ScreenId = new Guid("eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee")
+                        },
+                        new
+                        {
+                            Id = new Guid("50000000-0000-0000-0000-000000000008"),
+                            Number = 1,
+                            Row = "A",
+                            ScreenId = new Guid("ffffffff-ffff-ffff-ffff-ffffffffffff")
+                        },
+                        new
+                        {
+                            Id = new Guid("50000000-0000-0000-0000-000000000009"),
+                            Number = 2,
+                            Row = "A",
+                            ScreenId = new Guid("ffffffff-ffff-ffff-ffff-ffffffffffff")
+                        });
                 });
 
             modelBuilder.Entity("CinemaApi.Data.Models.Showing", b =>
@@ -114,6 +277,48 @@ namespace CinemaApi.Migrations
                     b.HasIndex("FilmId");
 
                     b.ToTable("Showing");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("60000000-0000-0000-0000-000000000001"),
+                            CinemaId = new Guid("11111111-1111-1111-1111-111111111111"),
+                            EndTime = new DateTime(2024, 12, 20, 16, 20, 0, 0, DateTimeKind.Unspecified),
+                            FilmId = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+                            StartTime = new DateTime(2024, 12, 20, 14, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = new Guid("60000000-0000-0000-0000-000000000002"),
+                            CinemaId = new Guid("11111111-1111-1111-1111-111111111111"),
+                            EndTime = new DateTime(2024, 12, 20, 21, 20, 0, 0, DateTimeKind.Unspecified),
+                            FilmId = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+                            StartTime = new DateTime(2024, 12, 20, 19, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = new Guid("60000000-0000-0000-0000-000000000003"),
+                            CinemaId = new Guid("22222222-2222-2222-2222-222222222222"),
+                            EndTime = new DateTime(2024, 12, 20, 18, 28, 0, 0, DateTimeKind.Unspecified),
+                            FilmId = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
+                            StartTime = new DateTime(2024, 12, 20, 16, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = new Guid("60000000-0000-0000-0000-000000000004"),
+                            CinemaId = new Guid("22222222-2222-2222-2222-222222222222"),
+                            EndTime = new DateTime(2024, 12, 20, 22, 49, 0, 0, DateTimeKind.Unspecified),
+                            FilmId = new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"),
+                            StartTime = new DateTime(2024, 12, 20, 20, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = new Guid("60000000-0000-0000-0000-000000000005"),
+                            CinemaId = new Guid("33333333-3333-3333-3333-333333333333"),
+                            EndTime = new DateTime(2024, 12, 21, 17, 28, 0, 0, DateTimeKind.Unspecified),
+                            FilmId = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
+                            StartTime = new DateTime(2024, 12, 21, 15, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("CinemaApi.Data.Models.Screen", b =>
@@ -125,6 +330,17 @@ namespace CinemaApi.Migrations
                         .IsRequired();
 
                     b.Navigation("Cinema");
+                });
+
+            modelBuilder.Entity("CinemaApi.Data.Models.Seat", b =>
+                {
+                    b.HasOne("CinemaApi.Data.Models.Screen", "Screen")
+                        .WithMany("Seats")
+                        .HasForeignKey("ScreenId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Screen");
                 });
 
             modelBuilder.Entity("CinemaApi.Data.Models.Showing", b =>
@@ -154,6 +370,11 @@ namespace CinemaApi.Migrations
             modelBuilder.Entity("CinemaApi.Data.Models.Film", b =>
                 {
                     b.Navigation("Showings");
+                });
+
+            modelBuilder.Entity("CinemaApi.Data.Models.Screen", b =>
+                {
+                    b.Navigation("Seats");
                 });
 #pragma warning restore 612, 618
         }
